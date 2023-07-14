@@ -5,7 +5,7 @@ on:
       - master
   
     tags:
-      - "*"
+      - '*'
 
 jobs:
   build-and-deploy:
