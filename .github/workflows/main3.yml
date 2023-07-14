@@ -17,10 +17,18 @@ jobs:
 
       - name: Set Tag
         id: set_tag
+        #  script: |
+        #  - echo "tag=${{ github.ref }}"
+        #  - sed 's/^refs\/tags\///' >> $GITHUB_OUTPUT
         #run: echo "tag=${{ github.ref }}" >> $GITHUB_ENV
         #run: echo "tag=${{ github.ref | removeprefix refs/tags/ }}" >> $GITHUB_OUTPUT
         #run: echo "tag=${{ github.ref | replace \"refs/tags/\", \"\" }}" >> $GITHUB_OUTPUT
-        run: echo "tag=${{ github.ref }}" | sed 's/^refs\/tags\///' >> $GITHUB_OUTPUT
+        #run: echo "tag=${{ github.ref }}" | sed 's/^refs\/tags\///' >> $GITHUB_OUTPUT
+        run: echo "tag=${{ github.ref }}" | awk -F '/' '{print $3}' )" >> $GITHUB_OUTPUT
+        # run:
+        #   - echo "tag=${{ github.ref }}"
+        #   - sed 's/^refs\/tags\///' >> $GITHUB_OUTPUT
+      
       - name: Build Frontend Docker image
         run: docker build -t nacromancer858/frontend-image-777:${{ steps.set_tag.outputs.tag }} .
         working-directory: ./frontend
