@@ -1,18 +1,18 @@
 name: Pipeline-Frontend 
 on:
-#   push:
-#     branches:
-#       - master
-#     tags:
-#       - '*'
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
   workflow_dispatch:
     inputs:
       tag:
         description: "Release tag for backend docker image"
         required: true
-  push:
-    tags:
-      - '*'
+#   push:
+#     tags:
+#       - '*'
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -23,7 +23,6 @@ jobs:
         
       - name: Build Frontend Docker image
         run: |
-          cd frontend
           docker build -t nacromancer858/frontend-image-777:${{ github.event.inputs.tag }} .
         working-directory: ./frontend
         
@@ -37,35 +36,13 @@ jobs:
         run: docker push nacromancer858/frontend-image-777:${{ github.event.inputs.tag }}
         working-directory: ./frontend
        
-      - name: Deploy
-        env:
-            PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-            HOSTNAME: ${{secrets.SSH_HOST}}
-            USER_NAME: ${secrets.USER_NAME}
-      
-        run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
-          
-          cd /home/ubuntu/
-          docker rmi -f frontend_container
-          docker pull nacromancer858/frontend-image-777:${{ github.event.inputs.tag }}
-          docker run -d -p 80:80 --name frontend_container nacromancer858/frontend-image-777:${{ github.event.inputs.tag }}
-          '
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
+      - name: Deploy to EC2 instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.USER_NAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+           sudo docker rmi -f frontend_container
+           sudo docker pull nacromancer858/frontend-image-777:${{ github.event.inputs.tag }}
+           sudo docker run -d -p 80:80 --name frontend_container nacromancer858/frontend-image-777:${{ github.event.inputs.tag }}
