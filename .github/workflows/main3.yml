@@ -17,7 +17,8 @@ jobs:
 
       - name: Set Tag
         id: set_tag
-        run: echo "tag=${{ github.ref }}" >> $GITHUB_ENV
+        #run: echo "tag=${{ github.ref }}" >> $GITHUB_ENV
+        run: echo "tag=${{ github.ref }}" >> $GITHUB_OUTPUT
 
       - name: Build Frontend Docker image
         run: docker build -t nacromancer858/frontend-image-777:${{ steps.set_tag.outputs.tag }} .
