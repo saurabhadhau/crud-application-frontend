@@ -21,6 +21,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         
+      - name: debug
+        run: echo ${{ github.ref }}
       - name: Build Frontend Docker image
         run: |
           docker build -t nacromancer858/frontend-image-777:${{ github.event.inputs.tag }} .
