@@ -17,6 +17,10 @@ jobs:
 
       - name: Set Tag
         id: set_tag
+        run: |
+          fullTag=${{ github.ref }}
+          tag=${fullTag#refs/tags/}
+          echo "tag=${tag}" >> $GITHUB_OUTPUT 
         #  script: |
         #  - echo "tag=${{ github.ref }}"
         #  - sed 's/^refs\/tags\///' >> $GITHUB_OUTPUT
@@ -24,7 +28,7 @@ jobs:
         #run: echo "tag=${{ github.ref | removeprefix refs/tags/ }}" >> $GITHUB_OUTPUT
         #run: echo "tag=${{ github.ref | replace \"refs/tags/\", \"\" }}" >> $GITHUB_OUTPUT
         #run: echo "tag=${{ github.ref }}" | sed 's/^refs\/tags\///' >> $GITHUB_OUTPUT
-        run: echo "tag=${{ github.ref }}" | awk -F '/' '{print $2}' >> $GITHUB_OUTPUT
+        #run: echo "tag=${{ github.ref }}" | awk -F '/' '{print $2}' >> $GITHUB_OUTPUT
         # run:
         #   - echo "tag=${{ github.ref }}"
         #   - sed 's/^refs\/tags\///' >> $GITHUB_OUTPUT
