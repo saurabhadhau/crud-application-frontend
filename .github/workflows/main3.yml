@@ -24,7 +24,7 @@ jobs:
         #run: echo "tag=${{ github.ref | removeprefix refs/tags/ }}" >> $GITHUB_OUTPUT
         #run: echo "tag=${{ github.ref | replace \"refs/tags/\", \"\" }}" >> $GITHUB_OUTPUT
         #run: echo "tag=${{ github.ref }}" | sed 's/^refs\/tags\///' >> $GITHUB_OUTPUT
-        run: echo "tag=${{ github.ref }}" | awk -F '/' '{print $3}' )" >> $GITHUB_OUTPUT
+        run: echo "tag=${{ github.ref }}" | awk -F '/' '{print $3}' >> $GITHUB_OUTPUT
         # run:
         #   - echo "tag=${{ github.ref }}"
         #   - sed 's/^refs\/tags\///' >> $GITHUB_OUTPUT
