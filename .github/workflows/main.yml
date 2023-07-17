@@ -54,7 +54,6 @@ jobs:
           username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            sudo chmod 666 /var/run/docker.sock
             sudo docker stop frontend_container || true
             sudo docker rm frontend_container || true
             sudo docker pull nacromancer858/frontend-image-777:${{ steps.set_tag.outputs.tag }}
