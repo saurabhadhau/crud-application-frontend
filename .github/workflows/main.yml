@@ -34,7 +34,7 @@ jobs:
         #   - sed 's/^refs\/tags\///' >> $GITHUB_OUTPUT
       
       - name: Build Frontend Docker image
-        run: docker build -t nacromancer858/frontend-image-777:${{ steps.set_tag.outputs.tag }} .
+        run: docker build -t nacromancer858/frontend-image-7:${{ steps.set_tag.outputs.tag }} .
         working-directory: ./frontend
       
       - name: Log in to Docker Hub
@@ -44,7 +44,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
        
       - name: Push Frontend Docker image
-        run: docker push nacromancer858/frontend-image-777:${{ steps.set_tag.outputs.tag }}
+        run: docker push nacromancer858/frontend-image-7:${{ steps.set_tag.outputs.tag }}
         working-directory: ./frontend
        
       - name: Deploy to EC2 instance
@@ -56,8 +56,8 @@ jobs:
           script: |
             sudo docker stop frontend_container
             sudo docker rm frontend_container
-            sudo docker pull nacromancer858/frontend-image-777:${{ steps.set_tag.outputs.tag }}
-            sudo docker run -d --name frontend_container nacromancer858/frontend-image-777:${{ steps.set_tag.outputs.tag }}
+            sudo docker pull nacromancer858/frontend-image-7:${{ steps.set_tag.outputs.tag }}
+            sudo docker run -d --name frontend_container nacromancer858/frontend-image-7:${{ steps.set_tag.outputs.tag }}
 
 
      
