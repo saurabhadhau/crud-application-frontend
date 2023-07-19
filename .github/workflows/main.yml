@@ -57,7 +57,8 @@ jobs:
             sudo docker stop frontend_container
             sudo docker rm frontend_container
             sudo docker pull nacromancer858/frontend-image-7:${{ steps.set_tag.outputs.tag }}
-            sudo docker run -d --name frontend_container nacromancer858/frontend-image-7:${{ steps.set_tag.outputs.tag }}
+            sudo docker run -d --name frontend_container --network simple-crud-react-nodejs_frontend_network nacromancer858/frontend-image-7:${{ steps.set_tag.outputs.tag }}
+            
 
 
      
